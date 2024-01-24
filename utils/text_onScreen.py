@@ -16,7 +16,7 @@ class TextonScreen():
         os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
 
         # Set up the display
-        width, height = 400, 200
+        width, height = 300, 200
         self.screen = pygame.display.set_mode((width, height), pygame.NOFRAME)  # Hide window frame
         self.hwnd = pygame.display.get_wm_info()["window"]
 
@@ -32,17 +32,16 @@ class TextonScreen():
         self.text_position = (10, 10)  # top left
 
         self.clock = pygame.time.Clock()
-        self.frame_rate = 20  # Set your desired frame rate here
+        self.frame_rate = 10  # Set your desired frame rate here
 
     def set_always_on_top(self):
-        win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, 0, 0, 400, 200,
+        win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, 0, 0, 300, 200,
                             0x0001)
 
     def main(self, sharedData=None):
 
         # Main game loop
         while True:
-            # print("hi")
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -51,7 +50,7 @@ class TextonScreen():
             if sharedData is not None:
                 text = sharedData.message_to_display1
                 if text != "":
-                    pygame.draw.rect(self.screen, (0, 0, 0), (0, 0, 400, 50))
+                    pygame.draw.rect(self.screen, (0, 0, 0), (0, 0, 300, 50))
                     if text == "good posture detected":
                         font_color = (0, 255, 0)
                     elif text == "bad posture detected":
@@ -62,7 +61,7 @@ class TextonScreen():
 
                 text2 = sharedData.message_to_display2
                 if text2 != "":
-                    pygame.draw.rect(self.screen, (0, 0, 0), (0, 50, 400, 100))
+                    pygame.draw.rect(self.screen, (0, 0, 0), (0, 50, 300, 50))
                     if text2 == "5 min break":
                         font_color = (255, 0, 0)
                     else:
@@ -73,7 +72,7 @@ class TextonScreen():
 
                 text3 = sharedData.message_to_display3
                 if text3 != "":
-                    pygame.draw.rect(self.screen, (0, 0, 0), (0, 100, 400, 150))
+                    pygame.draw.rect(self.screen, (0, 0, 0), (0, 100, 300, 150))
                     if int(text3[14:]) <= 8 and int(text3[14:]) != 0:
                         font_color = (255, 0, 0)
                     else:

@@ -17,6 +17,8 @@ class FaceMesh():
         self.faces = []
         self.eye_closed_count_val = 0  # Rename to avoid conflict with the method name
 
+        self.blink_per_min = 60 # controls the rate of detection
+
         self.is_eyeClosed= False
     
     def findFaceMesh(self, img, draw=True):
@@ -89,7 +91,7 @@ class FaceMesh():
 
 
     def main(self, cap, shared_resource=None):
-        next_check_time = time.time() + 60  # 10 seconds
+        next_check_time = time.time() + self.blink_per_min # 10 seconds
 
         while True:
             success, img = cap.read()
@@ -100,16 +102,15 @@ class FaceMesh():
                 
                 current_time = time.time()
                 if current_time > next_check_time:
-                    next_check_time = current_time + 60  # check again in another 10 seconds
+                    next_check_time = current_time + self.blink_per_min # check again in another 10 seconds
                     
                     # put a message
                     if shared_resource is not None:
-                        # print("Blink per min: " + str(self.eye_closed_count_val))
+                        print("Blink per min: " + str(self.eye_closed_count_val))
                         shared_resource.message_to_display3 = "Blink per min: " + str(self.eye_closed_count_val)
                     
                     self.eye_closed_count_val = 0
 
-            # cv2.imshow("image", img)
             cv2.waitKey(20)
 
 
