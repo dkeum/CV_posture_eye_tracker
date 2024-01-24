@@ -1,0 +1,8 @@
+https://stackoverflow.com/questions/77239487/win32ctypes-pywin32-pywintypes-error-when-using-pyinstaller-in-vs-code-possib
+You can exclude your project folder from the windows virus check:
+
+Start -> Settings -> Privacy & Security -> Virus & threat protection
+manage settings -> exclusions -> add or remove exclusions
+add your project folder
+
+https://datatofish.com/executable-pyinstaller/
