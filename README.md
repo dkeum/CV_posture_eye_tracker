@@ -1,7 +1,7 @@
 # Goal 
 
 (1) Reduce computer vision syndrome through behavioral changes and alerting <br /> 
-(2) have good posture while working on the computer
+(2) improve good posture while working on the computer
 
 # Functionality
  uses the cameras on your laptop  <br /> 
