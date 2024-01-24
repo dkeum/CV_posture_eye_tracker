@@ -1,7 +1,7 @@
 # Goal 
 
 (1) Reduce computer vision syndrome through behavioral changes and alerting <br /> 
-(2) have good posture while working on the computer
+(2) improve good posture while working on the computer
 
 # Functionality
  uses the cameras on your laptop  <br /> 
@@ -31,6 +31,8 @@
 (4) enjoy 
 
 ### download the .exe file
+
+(1) download the git repo and click main.exe in dist/main folder <br />
 
 
 
