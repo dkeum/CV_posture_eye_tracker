@@ -32,6 +32,8 @@
 
 ### download the .exe file
 
+(1) download the git repo and click main.exe in dist/main folder <br />
+
 
 
 # Caveats:
