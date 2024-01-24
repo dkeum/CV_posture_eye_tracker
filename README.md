@@ -1,3 +1,17 @@
+# Goal 
+
+(1) Reduce computer vision syndrome through behavioral changes and alerting <br /> 
+(2) have good posture while working on the computer
+
+# Functionality
+ uses the cameras on your laptop  <br /> 
+     -> to detect your posture (ie shoulder ) <br /> 
+     -> track eye blinks (ideally around 18 blinks per min is good) <br /> 
+     -> tracks time    <br />
+         -> every 20 mins take a 20 second eye break  <br />
+         -> every 3hrs take a 5 min eye break <br />
+
+
 # To get started 
 
 ### supported on windows only for now
@@ -17,3 +31,10 @@
 (4) enjoy 
 
 ### download the .exe file
+
+
+
+# Caveats:
+
+(1) does not support other webcams at this moments, only main camera
+(2) not widely tested and in development stage
