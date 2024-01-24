@@ -70,7 +70,7 @@ class FaceMesh():
             distance_right_eye_H = self.euclidean_distance(x5, y5, x6, y6)
             distance_left_eye_H = self.euclidean_distance(x7, y7, x8, y8)
 
-            if distance_right_eye_V != 0 or distance_left_eye_V !=0:
+            if distance_right_eye_V != 0 and distance_left_eye_V !=0:
                 reRatio = distance_right_eye_H/distance_right_eye_V
                 leRatio = distance_left_eye_H/distance_left_eye_V
                 ratio = (reRatio+leRatio)/2

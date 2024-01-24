@@ -9,11 +9,21 @@ from eye_tracker.tiredness_checker import FaceMesh
 class SharedResources():
     def __init__(self):
         # body posture message
-        self.message_to_display1 = ""
+        self.message_to_display1 = "Thumbs Up to Start"
         self.message_to_display2 = ""
         self.message_to_display3 = "Blink per min: 0"
         self.lock = threading.Lock()
+        # self.lock1 = threading.Lock()
+        # self.lock2 = threading.Lock()
         self.updated_event = threading.Event()
+    
+    def update_msg1(self, message):
+        with self.lock:
+            self.message_to_display1 = message
+    
+    def read_msg1(self):
+        with self.lock:
+            return self.message_to_display1
 
 
 

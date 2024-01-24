@@ -59,15 +59,15 @@ class PostureChecker():
                                    print(good_angle, good_LD, good_RD)
                                    found_optimal_value = True
                     
-                    if found_optimal_value:
-                         if abs(good_angle - angle) > 5 or abs(good_LD - left_distance) > 15 or abs(good_RD - right_distance) > 15:
-                              # print("bad posture counter is: " + str(self.bad_posture_counter))
-                              # print(abs(good_angle - angle), abs(good_LD - left_distance), abs(good_RD - right_distance))
-                              if TextOnScreen != None:
-                                   TextOnScreen.message_to_display1 = "bad posture detected"
-                         else:
-                              if TextOnScreen != None:
-                                   TextOnScreen.message_to_display1 = "good posture detected"
+               if found_optimal_value:
+                    
+                    if abs(good_angle - angle) > 5 or abs(good_LD - left_distance) > 15 or abs(good_RD - right_distance) > 15:
+                         if TextOnScreen is not None:
+                              print("bad posture detected")
+                              TextOnScreen.update_msg1("bad posture detected")
+                    else:
+                         if TextOnScreen is not None:
+                              TextOnScreen.update_msg1("good posture detected")
                          #  cv2.putText(img,"Stand up with Good Posture",(70,50),cv2.FONT_HERSHEY_COMPLEX,3,(255,0,0),3)
                          #  cv2.putText(img,"If done, Put up a thumb",(70,200),cv2.FONT_HERSHEY_COMPLEX,3,(255,0,0),3)
 

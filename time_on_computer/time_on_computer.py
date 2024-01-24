@@ -3,9 +3,9 @@ import time
 class TimeTrack:
     def __init__(self):
         self.break_time = 15  # 5 minutes
-        self.reminder_interval = 120 # 2 hours or 180 minutes
+        self.reminder_interval = 120 # 2 hours 
         self.break_time_2 = 20  # 20 seconds
-        self.reminder_interval_2 = 20 # 20 mins
+        self.reminder_interval_2 = 1 # 20 mins
 
         # reference for numbers: https://www.webmd.com/eye-health/eye-fatigue-causes-symptoms-treatment
 
@@ -32,8 +32,8 @@ class TimeTrack:
         while True:
             if shared_resource is not None:
                 if self.has_20_min_passed():
+                    
                     if self.has_three_hours_passed():
-
                         shared_resource.message_to_display2 = "5 min break"
                         time.sleep(1)
                         
@@ -52,9 +52,7 @@ class TimeTrack:
                             
                         # shared_resource.message_to_display2 = ""
                     else:
-
-                        shared_resource.message_to_display2 = "20 sec eye break"
-                        time.sleep(1)
+                        print("20 sec eye break")
                         # Calculate the end time for the break
                         end_break_time = time.time() + self.break_time_2
 
@@ -69,7 +67,7 @@ class TimeTrack:
                 shared_resource.message_to_display2 = "Focus Mode"
             
             # check in every 20 mins
-            time.sleep(20 * 60)
+            time.sleep(self.reminder_interval_2*60)
 
 
 if __name__ == "__main__":
