@@ -36,5 +36,5 @@
 
 # Caveats:
 
-(1) does not support other webcams at this moments, only main camera
+(1) does not support other webcams at this moments, only main camera <br />
 (2) not widely tested and in development stage
