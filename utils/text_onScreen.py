@@ -1,7 +1,6 @@
 import pygame
 import sys
 import os
-import queue
 import win32gui
 import win32con
 
@@ -10,12 +9,12 @@ class TextonScreen():
         # Initialize Pygame
         pygame.init()
 
-        screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
-        os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
+        # screen_width, screen_height = pygame.display.Info().current_w, pygame.display.Info().current_h
+        # os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
 
         # Set up the display
         width, height = 300, 150
-        self.screen = pygame.display.set_mode((width, height), pygame.NOFRAME)  # Hide window frame
+        self.screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)  # Hide window frame ,pygame.NOFRAME
         self.hwnd = pygame.display.get_wm_info()["window"]
 
         pygame.display.set_caption("Text Display")
@@ -25,6 +24,7 @@ class TextonScreen():
         self.font = pygame.font.Font(None, 36)
 
         self.text_position = (10, 10)  # top left
+
 
         self.clock = pygame.time.Clock()
         self.frame_rate = 10  # Set your desired frame rate here
@@ -39,22 +39,35 @@ class TextonScreen():
 
     def main(self, sharedData=None):
         # Main game loop
+        APPMOUSEFOCUS = 1
+        APPINPUTFOCUS = 2
+        APPACTIVE     = 4
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
+            for e in pygame.event.get():
+                if e.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                # if e.type == pygame.ACTIVEEVENT:
+                #     print("ACTIVEEVENT:", e.state, e.gain)
+                #     if e.state & APPMOUSEFOCUS == APPMOUSEFOCUS:
+                #         print ('mouse focus ' + ('gained' if e.gain else 'lost'))
+                #     if e.state & APPINPUTFOCUS == APPINPUTFOCUS:
+                #         print ('input focus ' + ('gained' if e.gain else 'lost'))
+                #     if e.state & APPACTIVE == APPACTIVE:
+                #         print('app is ' + ('visibile' if e.gain else 'iconified'))
 
             if sharedData is not None:
-                text = sharedData.read_msg1()
-                if text != "":
-                    if text == "good posture detected":
+                # Check for new messages and update independently
+                text1 = sharedData.message_to_display1
+                if text1 != "":
+                    if text1 == "good posture detected":
                         font_color = (0, 255, 0)
-                    elif text == "bad posture detected":
+                    elif text1 == "bad posture detected":
                         font_color = (255, 0, 0)
                     else:
                         font_color = (255, 255, 255)
-                    self.update_display(text, self.text_position, font_color)
+                    self.update_display(text1, self.text_position, font_color)
+
 
                 text2 = sharedData.message_to_display2
                 if text2 != "":
@@ -66,7 +79,7 @@ class TextonScreen():
                     self.update_display(text2, text2_position, font_color)
 
                 text3 = sharedData.message_to_display3
-                if text3 != "":
+                if text3 != "" :
                     if int(text3[14:]) <= 8 and int(text3[14:]) != 0:
                         font_color = (255, 0, 0)
                     else:
@@ -76,8 +89,11 @@ class TextonScreen():
 
             pygame.display.flip()
             self.clock.tick(self.frame_rate)
-            pygame.time.delay(10)
+
 
 if __name__ == "__main__":
     text = TextonScreen()
     text.main()
+
+
+
