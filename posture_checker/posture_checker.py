@@ -32,7 +32,7 @@ class PostureChecker():
      def posture_checker(self, cap, shared_data=None, TextOnScreen=None):
           found_optimal_value = False
 
-          while True:
+          while not TextOnScreen.app_exit:
                _ , img = cap.read()
                img = self.detector.findPose(img,draw=False)
                lmList = self.detector.findPosition(img,draw=False)

@@ -45,6 +45,8 @@ class TextonScreen():
         while True:
             for e in pygame.event.get():
                 if e.type == pygame.QUIT:
+                    if sharedData != None:
+                        sharedData.app_exit = True
                     pygame.quit()
                     sys.exit()
                 # if e.type == pygame.ACTIVEEVENT:

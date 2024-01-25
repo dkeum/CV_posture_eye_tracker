@@ -29,7 +29,7 @@ class TimeTrack:
     def main(self, shared_resource=None):
 
 
-        while True:
+        while not shared_resource.app_exit:
             if shared_resource is not None:
                 if self.has_20_min_passed():
                     
@@ -63,11 +63,12 @@ class TimeTrack:
                             time.sleep(1)
                         
                         self.start_time_20min = time.time()
-                            
+
                 shared_resource.message_to_display2 = "Focus Mode"
             
             # check in every 20 mins
-            time.sleep(self.reminder_interval_2*60)
+            time.sleep(1)
+        
 
 
 if __name__ == "__main__":
