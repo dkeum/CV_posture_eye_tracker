@@ -37,7 +37,6 @@ if __name__ == "__main__":
     thread3.start()
     thread4.start()
 
-    print("starting text on Screen")
     TextonScreen().main(sharedResources)
 
     thread1.join()
