@@ -2,10 +2,10 @@ import time
 
 class TimeTrack:
     def __init__(self):
-        self.break_time = 15  # 5 minutes
+        self.break_time = 5  # 5 minutes
         self.reminder_interval = 120 # 2 hours 
         self.break_time_2 = 20  # 20 seconds
-        self.reminder_interval_2 = 1 # 20 mins
+        self.reminder_interval_2 = 20 # 20 mins
 
         # reference for numbers: https://www.webmd.com/eye-health/eye-fatigue-causes-symptoms-treatment
 
