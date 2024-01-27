@@ -15,6 +15,7 @@ class SharedResources():
         self.lock = threading.Lock()
         self.updated_event = threading.Event()
         self.app_exit = False
+        self.has_started = False
     
 
 
@@ -38,7 +39,7 @@ if __name__ == "__main__":
     thread3.start()
     thread4.start()
 
-    TextonScreen().main(sharedResources)
+    TextonScreen().main(sharedResources, cap)
 
     thread1.join()
     thread3.join()

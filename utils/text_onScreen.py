@@ -3,6 +3,8 @@ import sys
 import os
 import win32gui
 import win32con
+import cv2
+import numpy as np
 
 class TextonScreen():
     def __init__(self, x=0, y=0):
@@ -13,8 +15,8 @@ class TextonScreen():
         # os.environ['SDL_VIDEO_WINDOW_POS'] = "%d,%d" % (x, y)
 
         # Set up the display
-        width, height = 300, 150
-        self.screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)  # Hide window frame ,pygame.NOFRAME
+        self.width, self.height = 300, 150
+        self.screen = pygame.display.set_mode((self.width, self.height), pygame.RESIZABLE)  # Hide window frame ,pygame.NOFRAME
         self.hwnd = pygame.display.get_wm_info()["window"]
 
         pygame.display.set_caption("Text Display")
@@ -25,9 +27,9 @@ class TextonScreen():
 
         self.text_position = (10, 10)  # top left
 
-
         self.clock = pygame.time.Clock()
         self.frame_rate = 10  # Set your desired frame rate here
+        self.is_initialized = False
 
     def set_always_on_top(self):
         win32gui.SetWindowPos(self.hwnd, win32con.HWND_TOPMOST, 0, 0, 300, 150, 0x0001)
@@ -37,7 +39,7 @@ class TextonScreen():
         text_surface = self.font.render(text, True, color)
         self.screen.blit(text_surface, position)
 
-    def main(self, sharedData=None):
+    def main(self, sharedData=None, cap =None):
         # Main game loop
         APPMOUSEFOCUS = 1
         APPINPUTFOCUS = 2
@@ -57,6 +59,23 @@ class TextonScreen():
                 #         print ('input focus ' + ('gained' if e.gain else 'lost'))
                 #     if e.state & APPACTIVE == APPACTIVE:
                 #         print('app is ' + ('visibile' if e.gain else 'iconified'))
+
+            if cap != None and sharedData.has_started== False:
+                
+                _ , frame = cap.read()
+                height, width, _ = frame.shape
+                screen_width = 300 + width
+                screen_height = height
+                self.screen = pygame.display.set_mode((screen_width, screen_height))
+                frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)  # Convert to RGB format
+                frame = np.rot90(frame)  # Rotate the frame if needed
+                frame = pygame.surfarray.make_surface(frame)
+                self.screen.blit(frame, (300, 0))
+            else: 
+                if self.is_initialized == False:
+                    self.screen = pygame.display.set_mode((self.width, self.height))
+                    self.is_initialized = True
+
 
             if sharedData is not None:
                 # Check for new messages and update independently
@@ -95,7 +114,8 @@ class TextonScreen():
 
 if __name__ == "__main__":
     text = TextonScreen()
-    text.main()
+    cap = cv2.VideoCapture(0)
+    text.main(cap=cap)
 
 
 

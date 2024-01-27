@@ -56,6 +56,7 @@ class PostureChecker():
                                    print("Thumb's up confirmed")
                                    if TextOnScreen != None:
                                         TextOnScreen.message_to_display1 = "Thumb's up confirmed"
+                                        TextOnScreen.has_started = True
                                    print(good_angle, good_LD, good_RD)
                                    found_optimal_value = True
                     

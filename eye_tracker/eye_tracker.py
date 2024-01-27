@@ -85,10 +85,48 @@ class FaceMesh():
                         # print("total blinks: " + str(self.eye_closed_count_val))
                         self.is_eyeClosed = False
 
+    def mouth_closed(self):
+         if len(self.faces) != 0:
+        
+            # good ref: https://github.com/google/mediapipe/issues/1909
+            # vertical distance
+            x1, y1 = self.faces[0][61]  # RightSide End
+            x2, y2 = self.faces[0][91]  # LeftSide End
+            
+            x3, y3 = self.faces[0][37]  # right of middle top
+            x4, y4 = self.faces[0][84]  # right of middle bot
+
+        
+            x5, y5 = self.faces[0][0]  # middle top 
+            x6, y6 = self.faces[0][17 ]  # middle bot
+
+            x7, y7 = self.faces[0][267]  # left of middle top
+            x8, y8 = self.faces[0][314]  # left of middle bot
+
+
+            # mouth open ratio
+            horizontal_distance= self.euclidean_distance(x1, y1, x2, y2)
+            right_of_middle = self.euclidean_distance(x3, y3, x4, y4)
+
+            middle = self.euclidean_distance(x5, y5, x6, y6)
+            left_of_middle = self.euclidean_distance(x7, y7, x8, y8)
+
+            return (right_of_middle+middle+left_of_middle)/(3*horizontal_distance)
+
+    def neck_leaning_forward(self):
+        # here we use the NLR Ratio
+        # https://iopscience.iop.org/article/10.1088/1742-6596/2325/1/012057/pdf
+        if len(self.faces) != 0:
+        
+            x1, y1 = self.faces[0][8]  # top of nose
+            x2, y2 = self.faces[0][4]  # bottome of nose
+
+            vertical_distance= self.euclidean_distance(x1, y1, x2, y2)
+
+            return vertical_distance
 
     def euclidean_distance(self, x1, y1, x2, y2):
         return ((x2 - x1) ** 2 + (y2 - y1) ** 2) ** 0.5
-
 
     def main(self, cap, shared_resource=None):
         next_check_time = time.time() + self.blink_per_min # 10 seconds
