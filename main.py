@@ -1,5 +1,4 @@
 import threading 
-import os 
 from utils.text_onScreen import TextonScreen
 from posture_checker.posture_checker import PostureChecker
 from time_on_computer.time_on_computer import TimeTrack
@@ -17,9 +16,6 @@ class SharedResources():
         self.app_exit = False
         self.has_started = False
     
-
-
-
 if __name__ == "__main__":
 
     textOnScreen = TextonScreen()

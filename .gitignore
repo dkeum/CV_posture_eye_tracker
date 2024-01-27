@@ -1,3 +1,4 @@
 build/
 
 mood_tracker/Model/
+dist/main/_internal/certifi/cacert.pem
