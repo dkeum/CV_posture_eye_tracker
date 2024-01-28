@@ -74,6 +74,8 @@ class TextonScreen():
             else: 
                 if self.is_initialized == False:
                     self.screen = pygame.display.set_mode((self.width, self.height))
+                    self.hwnd = pygame.display.get_wm_info()["window"]
+                    self.set_always_on_top()
                     self.is_initialized = True
 
 
