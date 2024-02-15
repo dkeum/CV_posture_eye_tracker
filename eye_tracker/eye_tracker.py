@@ -1,7 +1,7 @@
 import cv2
 import mediapipe as mp
 import time
-
+import numpy as np
 
 class FaceMesh():
     def __init__(self, staticMode=False, maxFaces=2, minDectConf=0.5, minTrackConf=0.5):
@@ -20,6 +20,8 @@ class FaceMesh():
         self.blink_per_min = 60 # controls the rate of detection
 
         self.is_eyeClosed= False
+
+        self.eye_threshold = 0
     
     def findFaceMesh(self, img, draw=True):
         self.imgRGB = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
@@ -75,12 +77,12 @@ class FaceMesh():
                 leRatio = distance_left_eye_H/distance_left_eye_V
                 ratio = (reRatio+leRatio)/2
             
-            
-                if ratio > 4.4: 
+                eye_threshold = np.interp(self.eye_threshold, [0,100], [-2,2])
+                if ratio > 4.4+eye_threshold: 
                     self.is_eyeClosed = True
                     # print("eye is down")
                 else:
-                    if ratio < 3.5 and self.is_eyeClosed:
+                    if ratio < 3.5+eye_threshold and self.is_eyeClosed:
                         self.eye_closed_count_val += 1
                         # print("total blinks: " + str(self.eye_closed_count_val))
                         self.is_eyeClosed = False
@@ -130,10 +132,10 @@ class FaceMesh():
 
     def main(self, cap, shared_resource=None):
         next_check_time = time.time() + self.blink_per_min # 10 seconds
-
+        
         while not shared_resource.app_exit:
+            self.eye_threshold = shared_resource.eye_threshold
             success, img = cap.read()
-
             img, faces = self.findFaceMesh(img, draw=False)
             if len(faces) != 0:
                 self.count_eye_closed()  # Adjusted method name
@@ -149,8 +151,9 @@ class FaceMesh():
                     
                     self.eye_closed_count_val = 0
 
-            cv2.waitKey(20)
+            cv2.waitKey(5)
 
+        
 
 if __name__ == "__main__":
     detector = FaceMesh()

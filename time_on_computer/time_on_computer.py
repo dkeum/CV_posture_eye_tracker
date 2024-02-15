@@ -27,47 +27,45 @@ class TimeTrack:
         return elapsed_time >= self.reminder_interval_2 * 60  # 20 minutes in seconds
 
     def main(self, shared_resource=None):
-
-
+        
         while not shared_resource.app_exit:
-            if shared_resource is not None:
-                if self.has_20_min_passed():
+            self.reminder_interval_2 = shared_resource.timer_interval
+            if self.has_20_min_passed():
+                if self.has_three_hours_passed():
+                    shared_resource.message_to_display2 = "5 min break"
+                    time.sleep(1)
                     
-                    if self.has_three_hours_passed():
-                        shared_resource.message_to_display2 = "5 min break"
+                    # Calculate the end time for the break
+                    end_break_time = time.time() + self.break_time * 60
+
+                    while time.time() < end_break_time:
+                        remaining_time = int(end_break_time - time.time())
+                        minutes = remaining_time // 60
+                        seconds = remaining_time % 60
+
+                        shared_resource.message_to_display2 = f"Countdown: {minutes} min {seconds} sec"
                         time.sleep(1)
+                    
+                    self.start_time_3hr = time.time()
                         
-                        # Calculate the end time for the break
-                        end_break_time = time.time() + self.break_time * 60
+                    # shared_resource.message_to_display2 = ""
+                else:
+                    print("20 sec eye break")
+                    # Calculate the end time for the break
+                    end_break_time = time.time() + self.break_time_2
 
-                        while time.time() < end_break_time:
-                            remaining_time = int(end_break_time - time.time())
-                            minutes = remaining_time // 60
-                            seconds = remaining_time % 60
+                    while time.time() < end_break_time:
+                        remaining_time = int(end_break_time - time.time())
+                        seconds = remaining_time % 60
+                        shared_resource.message_to_display2 = f"Countdown: {seconds} sec"
+                        time.sleep(1)
+                    
+                    self.start_time_20min = time.time()
 
-                            shared_resource.message_to_display2 = f"Countdown: {minutes} min {seconds} sec"
-                            time.sleep(1)
-                        
-                        self.start_time_3hr = time.time()
-                            
-                        # shared_resource.message_to_display2 = ""
-                    else:
-                        print("20 sec eye break")
-                        # Calculate the end time for the break
-                        end_break_time = time.time() + self.break_time_2
-
-                        while time.time() < end_break_time:
-                            remaining_time = int(end_break_time - time.time())
-                            seconds = remaining_time % 60
-                            shared_resource.message_to_display2 = f"Countdown: {seconds} sec"
-                            time.sleep(1)
-                        
-                        self.start_time_20min = time.time()
-
-                shared_resource.message_to_display2 = "Focus Mode"
-            
-            # check in every 20 mins
-            time.sleep(1)
+            shared_resource.message_to_display2 = "Focus Mode"
+        
+        # check in every 20 mins
+        time.sleep(1)
         
 
 

@@ -40,12 +40,13 @@ while True:
         output = model_0(preprocessed_frame)
         _, predicted = torch.max(output, 1)
         prediction = train_data[predicted.item()]
+        print(prediction)
     
     # Display prediction
-    cv2.putText(frame, prediction, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+    # cv2.putText(frame, prediction, (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
     cv2.imshow('Live Feed', frame)
     
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(100) & 0xFF == ord('q'):
         break
 
 # Release video capture and close window

@@ -1,9 +1,7 @@
-import threading 
 from utils.text_onScreen import TextonScreen
-from posture_checker.posture_checker import PostureChecker
-from time_on_computer.time_on_computer import TimeTrack
+import threading 
 import cv2
-from eye_tracker.eye_tracker import FaceMesh
+
 
 class SharedResources():
     def __init__(self):
@@ -15,29 +13,40 @@ class SharedResources():
         self.updated_event = threading.Event()
         self.app_exit = False
         self.has_started = False
+        self.start_button =  False
+
+        self.webcam_num = 0
+
+        # number tuning
+        self.eye_threshold = 50 # deals with opening/closing eye 
+        self.shoulder_threshold = 0 # deals with posture positions
+        self.camera_on = False # while detecting if there's 
+        self.mood_prediction = False # Paid feature?
+        self.timer_interval = 20 
+        self.cap = cv2.VideoCapture(self.webcam_num)
+    
+    def change_cap(self,num):
+        self.webcam_num = num
+        self.cap = cv2.VideoCapture(num)
+
+    def reset_default_value(self):
+        self.message_to_display1 = "Thumbs Up to Start"
+        self.message_to_display2 = ""
+        self.message_to_display3 = "Blink per min: 0"
+        self.start_button =  False
+
+        # self.webcam_num = 0
+        self.app_exit = True
+        self.has_started = False
+
+
+
+
     
 if __name__ == "__main__":
 
-    textOnScreen = TextonScreen()
-    posture_checker = PostureChecker()
     sharedResources = SharedResources() # how the modules communicate with each other
-    TimeonComputer = TimeTrack()
-    eye_track = FaceMesh()
+    textOnScreen = TextonScreen(sharedResources=sharedResources)
+    textOnScreen.main()
 
-    cap = cv2.VideoCapture(0)
-    
-    thread1 = threading.Thread(target=posture_checker.main, args=(cap, sharedResources))
-    thread3 = threading.Thread(target=TimeonComputer.main, args=(sharedResources,))  
-    thread4 = threading.Thread(target=eye_track.main, args=(cap, sharedResources,))  
- 
-
-    thread1.start()
-    thread3.start()
-    thread4.start()
-
-    TextonScreen().main(sharedResources, cap)
-
-    thread1.join()
-    thread3.join()
-    thread4.join()
 

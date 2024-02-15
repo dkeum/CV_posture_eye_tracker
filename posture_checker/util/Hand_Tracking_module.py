@@ -81,11 +81,11 @@ class handDetector():
      - take in the videoCapture "cap" as input. 
      - Used a thread function
     '''
-    def ThumbUp(self ,cap, shared_data=None): 
+    def ThumbUp(self ,cap, shared_data=None, textOnScreen= None): 
         timestamp = 0
         isFound = False
         with GestureRecognizer.create_from_options(self.options) as recognizer:
-            while not isFound:
+            while not isFound and not textOnScreen.app_exit:
                 success, img = cap.read()
                 timestamp+=1
                 mp_image = mp.Image(image_format=mp.ImageFormat.SRGB, data=img)
